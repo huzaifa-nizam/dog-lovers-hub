@@ -15,8 +15,13 @@ async function fetchDogImageAndBreed() {
         const breed = dog.breeds[0];
 
         document.getElementById('dogImage').src = dog.url;
-        document.getElementById('breedName').innerText = breed.name;
-        document.getElementById('breedInfoText').innerText = breed.temperament;
+        if (breed) {
+            document.getElementById('breedName').innerText = breed.name;
+            document.getElementById('breedInfoText').innerText = breed.temperament;
+        } else {
+            document.getElementById('breedName').innerText = 'Unknown Breed';
+            document.getElementById('breedInfoText').innerText = 'No information available';
+        }
     } catch (error) {
         console.error('Error fetching dog image and breed:', error);
     }
@@ -34,35 +39,11 @@ async function fetchDogFact() {
 }
 
 async function generateDogName() {
-    const url = 'https://names.drycodes.com/1?nameOptions=dog_names';
+    const url = 'https://randomuser.me/api/?inc=name';
     try {
         const response = await fetch(url);
         const data = await response.json();
-        document.getElementById('dogNameText').innerText = data[0];
+        const name = data.results[0].name.first;
+        document.getElementById('dogNameText').innerText = name;
     } catch (error) {
         console.error('Error generating dog name:', error);
-    }
-}
-
-async function fetchDogJoke() {
-    const url = 'https://v2.jokeapi.dev/joke/Animal?contains=dog';
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-        document.getElementById('jokeText').innerText = data.type === "single" ? data.joke : `${data.setup} - ${data.delivery}`;
-    } catch (error) {
-        console.error('Error fetching dog joke:', error);
-    }
-}
-
-async function fetchDogHealthTip() {
-    const tips = [
-        "Regular check-ups with your vet can prevent health issues.",
-        "Proper nutrition is key to a healthy dog.",
-        "Exercise keeps your dog fit and happy.",
-        "Keep your dog's teeth clean to prevent dental issues.",
-        "Regular grooming maintains your dog's coat and skin health."
-    ];
-    const randomTip = tips[Math.floor(Math.random() * tips.length)];
-    document.getElementById('healthTipText').innerText = randomTip;
-}
