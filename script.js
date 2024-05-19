@@ -66,4 +66,3 @@ async function fetchDogHealthTip() {
     const randomTip = tips[Math.floor(Math.random() * tips.length)];
     document.getElementById('healthTipText').innerText = randomTip;
 }
-
