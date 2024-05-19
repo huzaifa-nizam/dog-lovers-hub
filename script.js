@@ -7,17 +7,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function fetchDogImageAndBreed() {
+    const url = 'https://api.thedogapi.com/v1/images/search';
     try {
-        const breedResponse = await fetch('https://api.thedogapi.com/v1/breeds');
-        const breeds = await breedResponse.json();
-        const randomBreed = breeds[Math.floor(Math.random() * breeds.length)];
+        const response = await fetch(url);
+        const data = await response.json();
+        const dog = data[0];
+        const breed = dog.breeds[0];
 
-        document.getElementById('breedName').innerText = randomBreed.name;
-        document.getElementById('breedInfoText').innerText = randomBreed.temperament;
-
-        const imageResponse = await fetch(`https://dog.ceo/api/breed/${randomBreed.name.toLowerCase().replace(' ', '/')}/images/random`);
-        const imageData = await imageResponse.json();
-        document.getElementById('dogImage').src = imageData.message;
+        document.getElementById('dogImage').src = dog.url;
+        document.getElementById('breedName').innerText = breed.name;
+        document.getElementById('breedInfoText').innerText = breed.temperament;
     } catch (error) {
         console.error('Error fetching dog image and breed:', error);
     }
@@ -67,3 +66,4 @@ async function fetchDogHealthTip() {
     const randomTip = tips[Math.floor(Math.random() * tips.length)];
     document.getElementById('healthTipText').innerText = randomTip;
 }
+
