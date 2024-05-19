@@ -32,33 +32,33 @@ async function fetchDogBreedInfo() {
 }
 
 async function fetchDogFact() {
-    const url = 'https://some-random-api.ml/facts/dog';
+    const url = 'https://dog-api.kinduff.com/api/facts';
     try {
         const response = await fetch(url);
         const data = await response.json();
-        document.getElementById('factText').innerText = data.fact;
+        document.getElementById('factText').innerText = data.facts[0];
     } catch (error) {
         console.error('Error fetching dog fact:', error);
     }
 }
 
 async function generateDogName() {
-    const url = 'https://uinames.com/api/?region=united%20states&gender=male';
+    const url = 'https://names.drycodes.com/1?nameOptions=dog_names';
     try {
         const response = await fetch(url);
         const data = await response.json();
-        document.getElementById('dogNameText').innerText = data.name;
+        document.getElementById('dogNameText').innerText = data[0];
     } catch (error) {
         console.error('Error generating dog name:', error);
     }
 }
 
 async function fetchDogJoke() {
-    const url = 'https://v2.jokeapi.dev/joke/Any?contains=dog';
+    const url = 'https://v2.jokeapi.dev/joke/Animal?contains=dog';
     try {
         const response = await fetch(url);
         const data = await response.json();
-        document.getElementById('jokeText').innerText = `${data.setup} - ${data.delivery}`;
+        document.getElementById('jokeText').innerText = data.type === "single" ? data.joke : `${data.setup} - ${data.delivery}`;
     } catch (error) {
         console.error('Error fetching dog joke:', error);
     }
